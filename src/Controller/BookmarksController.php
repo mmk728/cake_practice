@@ -110,4 +110,21 @@ class BookmarksController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function tags()
+    {
+        // CakePHPによって提供された 'pass' キーはすべての
+        // リクエストにある渡されたURLのパスセグメントです
+        $tags = $this->request->getParam('pass');
+
+        // タグ付きのブックマークを探すためいBookmarksTableを使用
+        $bookmarks = $this->Bookmarks->find('tagged', [
+            'tags' => $tags
+        ]);
+
+        $this->set([
+            'bookmarks' => $bookmarks,
+            'tags' => $tags
+        ]);
+    }
 }
